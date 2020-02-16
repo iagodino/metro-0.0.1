@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public Transform groundCheck;
     public float jumpForce;
+    public float fireRate;
 
     private float speed;
     private Rigidbody2D rb;
@@ -14,6 +15,10 @@ public class Player : MonoBehaviour
     private bool onGround;
     private bool jump = false;
     private bool doubleJump;
+    public Weapon weaponEquipped;
+    private Animator anim;
+    private Attack attack;
+    private float nextAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +26,8 @@ public class Player : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         speed = maxSpeed;
-
+        anim = GetComponent<Animator>();
+        attack = GetComponentInChildren<Attack>();
     }
 
     // Update is called once per frame
@@ -38,6 +44,15 @@ public class Player : MonoBehaviour
             if (!doubleJump && !onGround)
                 doubleJump = true;
         }
+
+        if (Input.GetButtonDown("Fire1") && Time.time > nextAttack && weaponEquipped != null)
+        {
+            anim.SetTrigger("Attack");
+            attack.PlayAnimation(weaponEquipped.animation);
+            nextAttack = Time.time + fireRate;
+
+        }
+       
     }
 
     private void FixedUpdate()
@@ -70,5 +85,11 @@ public class Player : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+    }
+
+    public void AddWeapon(Weapon weapon)
+    {
+        weaponEquipped = weapon;
+        attack.SetWeapon(weaponEquipped.damage);
     }
 }
