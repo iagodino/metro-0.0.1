@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public static Inventory inventory;
     public List<Weapon> weapons;
     public List<Key> keys;
+    public List<ConsumableItem> items;
 
     // Start is called before the first frame update
     void Awake()
@@ -46,5 +47,22 @@ public class Inventory : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void AddItem(ConsumableItem item)
+    {
+        items.Add(item);
+    }
+
+    public  void RemoveItem(ConsumableItem item)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if(items[i] == item)
+            {
+                items.RemoveAt(i);
+                break;
+            }
+        }
     }
 }
