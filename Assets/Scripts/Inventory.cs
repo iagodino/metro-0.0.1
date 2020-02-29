@@ -35,4 +35,16 @@ public class Inventory : MonoBehaviour
     {
         keys.Add(key);
     }
+
+    public bool CheckKey(Key key)
+    {
+        for (int i = 0; i < keys.Count; i++)
+        {
+            if (keys[i] == key)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
