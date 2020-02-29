@@ -28,7 +28,8 @@ public class KeyDrop : MonoBehaviour
     {
         Player player = other.GetComponent<Player>();
         if (player != null)
-        { 
+        {
+            Inventory.inventory.AddKey(key);
             Destroy(gameObject);
         }
     }
